@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Festival de Cometas XVII · Vientos de Paz</title>
+<meta name="description" content="Inscripción al Festival de Cometas XVII Vientos de Paz — Flandes, Tolima.">
+<meta name="theme-color" content="#025A2F">
+<link rel="icon" href="icon-192.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<!-- ===== Loader: la cometa se eleva ===== -->
+<div id="loader" class="loader" role="status" aria-live="polite">
+  <svg class="loader-kite" viewBox="0 0 120 220" aria-hidden="true">
+    <path class="hilo" d="M60 96 C 40 130, 80 150, 60 186 C 44 208, 70 214, 62 218" fill="none"/>
+    <g class="cometa">
+      <polygon points="60,8 104,52 60,96 16,52" fill="var(--sol)"/>
+      <polygon points="60,8 104,52 60,96" fill="var(--coral)"/>
+      <polygon points="60,8 16,52 60,96" fill="var(--agua)"/>
+      <path d="M60 8 V96 M16 52 H104" stroke="rgba(255,255,255,.85)" stroke-width="2"/>
+    </g>
+    <g class="monos">
+      <rect x="52" y="132" width="16" height="7" rx="3" fill="var(--lila)"/>
+      <rect x="52" y="164" width="16" height="7" rx="3" fill="var(--coral)"/>
+      <rect x="52" y="196" width="16" height="7" rx="3" fill="var(--sol)"/>
+    </g>
+  </svg>
+  <p class="loader-txt">Tomando viento…</p>
+</div>
+
+<main id="app" hidden>
+
+  <!-- ===== Encabezado ===== -->
+  <header class="cabecera">
+    <p class="eyebrow">Flandes, Tolima · XVII edición</p>
+    <h1 id="tituloEvento">FESTIVAL DE COMETAS XVII VIENTOS DE PAZ</h1>
+    <p class="lema" id="lemaEvento">FAMILIAS UNIDAS PARA TRANSFORMAR A FLANDES</p>
+    <p class="homenaje" id="homenajeEvento">Homenaje a nuestra querida amiga Beatriz Aya Hurtado</p>
+  </header>
+
+  <!-- ===== 1. Documento ===== -->
+  <section class="tarjeta" id="pasoDocumento">
+    <span class="paso">Paso 1 de 2</span>
+    <h2>Empecemos por tu documento</h2>
+    <label class="campo">
+      <span class="etq">Documento</span>
+      <input id="inDocumento" inputmode="numeric" autocomplete="off" maxlength="10" placeholder="Ej. 1070602493">
+      <small class="ayuda">Número de documento de la persona mayor de edad responsable del niño o la niña.</small>
+    </label>
+    <p class="error" id="errDocumento" hidden></p>
+    <button class="btn btn-primario" id="btnIniciar">Iniciar</button>
+  </section>
+
+  <!-- ===== 2. Datos ===== -->
+  <section class="tarjeta" id="pasoDatos" hidden>
+    <span class="paso">Paso 2 de 2</span>
+    <h2>Datos del adulto responsable</h2>
+    <p class="doc-fijo">Documento <b id="docFijo"></b> · <button type="button" class="enlace" id="btnCambiarDoc">cambiar</button></p>
+
+    <label class="campo">
+      <span class="etq">Nombres</span>
+      <input id="inNombres" autocomplete="given-name" maxlength="60" placeholder="Nombres del adulto responsable">
+    </label>
+    <label class="campo">
+      <span class="etq">Apellidos</span>
+      <input id="inApellidos" autocomplete="family-name" maxlength="60" placeholder="Apellidos del adulto responsable">
+    </label>
+    <label class="campo">
+      <span class="etq">WhatsApp</span>
+      <input id="inWhatsapp" inputmode="numeric" autocomplete="tel" maxlength="10" placeholder="3001234567">
+    </label>
+
+    <fieldset class="campo">
+      <legend class="etq">Categoría</legend>
+      <small class="ayuda">Selecciona solo una categoría.</small>
+      <div class="categorias" id="listaCategorias"></div>
+    </fieldset>
+
+    <p class="error" id="errDatos" hidden></p>
+    <button class="btn btn-primario" id="btnGuardar">Confirmar inscripción</button>
+  </section>
+
+  <!-- ===== 3. Inscripción cerrada ===== -->
+  <section class="tarjeta tarjeta-aviso" id="pasoCerrado" hidden>
+    <svg class="aviso-kite" viewBox="0 0 120 120" aria-hidden="true">
+      <polygon points="60,10 100,50 60,90 20,50" fill="var(--sol)"/>
+      <polygon points="60,10 100,50 60,90" fill="var(--coral)"/>
+      <path d="M60 10 V90 M20 50 H100" stroke="#fff" stroke-width="3"/>
+    </svg>
+    <h2>La inscripción en línea ya cerró</h2>
+    <p id="txtCerrado">Te esperamos en el punto mañana a partir de las 3:00 p. m. para ayudarte con la inscripción.</p>
+    <button class="btn btn-suave" id="btnVolverCierre">Consultar otro documento</button>
+  </section>
+
+  <!-- ===== 4. Ya estás inscrito: información del evento ===== -->
+  <section id="pasoEvento" hidden>
+
+    <div class="tarjeta tarjeta-ok">
+      <p class="ok-eyebrow" id="okEyebrow">¡Inscripción confirmada!</p>
+      <h2 id="okNombre">—</h2>
+      <p class="ok-linea">Categoría · <b id="okCategoria">—</b></p>
+      <p class="ok-linea">Documento <b id="okDocumento">—</b> · Estado <span class="chip" id="okEstado">INSCRITO</span></p>
+    </div>
+
+    <!-- Firma visual: la cometa con el conteo colgando de su cola -->
+    <div class="cuenta" aria-live="polite">
+      <svg class="cuenta-kite" viewBox="0 0 200 150" aria-hidden="true">
+        <g class="vuela">
+          <polygon points="100,12 146,58 100,104 54,58" fill="var(--sol)"/>
+          <polygon points="100,12 146,58 100,104" fill="var(--coral)"/>
+          <polygon points="100,12 54,58 100,104" fill="var(--agua)"/>
+          <path d="M100 12 V104 M54 58 H146" stroke="#fff" stroke-width="2.5"/>
+        </g>
+        <path class="hilo-cuenta" d="M100 104 C 92 120, 108 132, 100 148" fill="none"/>
+      </svg>
+      <p class="cuenta-titulo" id="cuentaTitulo">Faltan para elevar cometa</p>
+      <div class="monos-cuenta">
+        <div class="mono"><b id="cDias">--</b><span>días</span></div>
+        <div class="mono"><b id="cHoras">--</b><span>horas</span></div>
+        <div class="mono"><b id="cMin">--</b><span>minutos</span></div>
+        <div class="mono"><b id="cSeg">--</b><span>segundos</span></div>
+      </div>
+      <p class="cuenta-fecha" id="cuentaFecha">—</p>
+    </div>
+
+    <div class="tarjeta tarjeta-mapa">
+      <h3>Nos vemos aquí</h3>
+      <p class="lugar" id="lugarEvento">Cancha de fútbol del barrio La Ceiba</p>
+      <div class="mapa-marco">
+        <iframe id="mapa" title="Mapa del punto de encuentro" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        <span class="pin" aria-hidden="true"></span>
+      </div>
+      <a class="btn btn-primario" id="btnComoLlegar" target="_blank" rel="noopener">Cómo llegar</a>
+      <button class="btn btn-suave" id="btnCompartir">Invitar a mi familia</button>
+    </div>
+
+    <button class="btn btn-texto" id="btnVolverInicio">Consultar otro documento</button>
+  </section>
+
+  <footer class="pie">
+    <img src="icon-192.png" alt="" width="28" height="28">
+    <span>Alcaldía de Flandes · Secretaría de Educación, Desarrollo Económico y Social</span>
+  </footer>
+</main>
+
+<div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
+
+<script src="marca.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
